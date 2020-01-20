@@ -1,7 +1,7 @@
 {
   "name": "hansin-cli",
   "version": "1.0.1",
-  "description": "CLUB 命令行",
+  "description": "Hansin 命令行",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,6 +10,11 @@
   "bin": {
     "hansin": "./index.js"
   },
+  "files": [
+    "helpers",
+    "src/actions",
+    "src/tmp/*/*.zip"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/clubfactory/hansin-cli.git"
