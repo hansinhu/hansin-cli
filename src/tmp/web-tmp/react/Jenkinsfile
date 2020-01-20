@@ -1,0 +1,143 @@
+import groovy.transform.Field
+
+// 接收报警的用户的企业微信ID(即工号)列表，用英文逗号分隔
+@Field
+List<Integer> Infoee = [
+  34, 282, 298, 399, 416, 443,
+  451, 478, 513, 592, 579, 1102,
+  766
+]
+
+// 开发语言
+@Field
+String Language = 'js'
+
+// App 名称
+@Field
+String AppName = '<%= appName %>'
+
+// 开发机器
+@Field
+List<String> Devs = [
+  'aws:usa:admin:localhost:22',
+]
+
+// 测试机器
+@Field
+List<String> Tests = [
+  // Test-02
+  'aws:usa:admin:172.31.254.158:373',
+  // Nginx-01
+  'aws:usa:admin:172.31.254.220:373',
+  // test
+  'aws:usa:admin:172.16.179.60:22',
+]
+
+@Field
+List<String> Test01 = [
+  'aws:usa:admin:172.31.254.48:22',
+]
+@Field
+List<String> Test02 = [
+  'aws:usa:admin:172.31.254.158:373',
+]
+@Field
+List<String> Test03 = [
+  'aws:usa:admin:172.31.254.192:373',
+]
+@Field
+List<String> Test04 = [
+  'aws:usa:admin:172.31.254.27:373',
+]
+@Field
+List<String> Test05 = [
+  'aws:usa:admin:172.31.254.67:373',
+]
+@Field
+List<String> Test06 = [
+  'aws:usa:admin:172.31.25.83:373',
+]
+@Field
+List<String> Test07 = [
+  'aws:usa:admin:172.31.254.111:373',
+]
+@Field
+List<String> Test08 = [
+  'aws:usa:admin:172.31.254.19:373',
+]
+@Field
+List<String> Test09 = [
+  'aws:usa:admin:172.31.254.193:373',
+]
+@Field
+List<String> Test10 = [
+  'aws:usa:admin:172.31.254.153:373',
+]
+@Field
+List<String> Test11 = [
+  'aws:usa:admin:172.31.254.241:373',
+]
+
+// m站
+@Field
+List<String> TestPwa = [
+  'aws:usa:admin:172.31.254.27:373',
+]
+@Field
+List<String> TestPwa1 = [
+  // ORG-app-pc&m-test-1
+  'aws:usa:admin:172.31.254.184:373',
+]
+@Field
+List<String> TestPwa2 = [
+  // ORG-app-pc&m-test-2
+  'aws:usa:admin:172.31.254.246:22',
+]
+
+// 预发1机器
+@Field
+List<String> Pres = [
+  // pre-1
+  'aws:usa:admin:172.31.8.160:22',
+  // pre-3
+  'aws:usa:admin:172.31.17.17:22',
+]
+
+@Field
+List<String> Pre01 = [
+  'aws:usa:admin:172.31.8.160:22',
+]
+@Field
+List<String> Pre02 = [
+  'aws:usa:admin:172.31.6.75:22',
+]
+@Field
+List<String> Pre03 = [
+  'aws:usa:admin:172.31.17.17:22',
+]
+
+@Field
+List<String> PrePwa = [
+  'aws:usa::172.31.20.46',
+  'aws:usa::172.31.9.92',
+]
+// 生产机器
+@Field
+List<String> Prods = [
+  // 两台nginx需要
+  // 'aws:usa:admin:172.31.20.215:22',
+  // 'aws:usa:admin:172.31.7.54:22',
+  'aws:usa:admin:172.31.24.70:22',
+  'aws:usa:admin:172.31.10.201:22',
+  'aws:usa:admin:172.31.1.40:22',
+  'aws:usa:admin:172.31.25.167:22',
+
+  // node服务需要
+  'aws:usa:admin:172.31.2.78:22',
+  'aws:usa:admin:172.31.29.100:22',
+  'aws:usa:admin:172.31.28.18:22',
+  'aws:usa:admin:172.31.8.58:22',
+]
+
+// 逻辑入口。永远不要修改之后的内容。
+AppFeCI(this)

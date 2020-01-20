@@ -1,0 +1,45 @@
+{
+  "name": "hansin-cli",
+  "version": "1.0.0",
+  "description": "CLUB 命令行",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "zip-tmp": "node ./src/actions/zip-tmp.js"
+  },
+  "bin": {
+    "hansin": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/clubfactory/hansin-cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/clubfactory/hansin-cli#readme",
+  "dependencies": {
+    "adm-zip": "^0.4.13",
+    "chalk": "^2.4.2",
+    "colors": "^1.3.3",
+    "commander": "^3.0.1",
+    "consolidate": "^0.15.1",
+    "cpy": "^7.3.0",
+    "ejs": "^2.7.1",
+    "figlet": "^1.2.4",
+    "inquirer": "^7.0.0",
+    "make-dir": "^3.0.0",
+    "prompts": "^2.2.1",
+    "shelljs": "^0.8.3",
+    "tar": "^4.4.11",
+    "validate-npm-package-name": "^3.0.0"
+  },
+  "devDependencies": {
+    "compressing": "^1.5.0",
+    "copy-dir": "^1.2.0",
+    "pipe": "^1.1.0",
+    "pump": "^3.0.0",
+    "rmdir": "^1.2.0",
+    "stream": "0.0.2"
+  }
+}

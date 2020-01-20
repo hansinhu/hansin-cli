@@ -1,0 +1,241 @@
+<script type="text/javascript" src="//a.cfcdn.club/nsr/static/src/lib/android_webviewjavascriptbridge.js"></script>
+<script type="text/javascript">
+    var eventId = window.eventId || 1;
+    window.changeEventId = function(id) {
+        eventId = id;
+    }
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg)) {
+            return unescape(arr[2]);
+        } else {
+            return null;
+        }
+    }
+    function chartWithNative(funcName, params, callback) {
+        var v = getCookie("v");
+        if (v) {
+            var versions = v.split("_");
+            var version = versions[versions.length - 1];
+            try {
+                if (navigator.userAgent.indexOf("android_native_navbar") > -1) {
+                    if (version < "4.7.0") {
+                        typeof(params) !== "undefined" ? window.JSInterface[funcName](params): window.JSInterface[funcName]();
+                    } else {
+                        WebViewJavascriptBridge.callHandler(funcName, params, callback);
+                    }
+                } else if (navigator.userAgent.indexOf("ios_native_navbar") > -1) {
+                    if (version >= "1.6.2") {
+                        WebViewJavascriptBridge.callHandler(funcName, params, callback);
+                    } else {
+                        window.webkit.messageHandlers[funcName].postMessage(params);
+                    }
+                }
+            } catch (e) {
+                console.debug(e);
+            }
+        }
+    }
+    function call_device(func_name, param) {
+        chartWithNative(func_name, param);
+    }
+
+
+    // compatible app callback, reduce errors
+    window.CFNative = {
+        onPageHide: function() {},
+        onPageShow: function() {},
+        onAppEnterForeground: function() {}
+    };
+    (function() {
+        window.notify_add_click_event = function(h5_event) {
+            if (is_device()) {
+                h5_event["mid"] = "1." + eventId + "." + h5_event["mid"];
+                h5_event["et"] = "click";
+                call_device("add_event", h5_event);
+            }
+        };
+        window.notify_add_product = function(h5_event) {
+            if (is_device()) {
+                h5_event["mid"] = "1." + eventId + "." + h5_event["mid"];
+                h5_event["et"] = "product";
+                call_device("add_event", h5_event);
+            }
+        };
+
+        function is_device() {
+            return navigator.userAgent.indexOf("native_navbar") > -1
+        };
+
+        var v = getCookie("v");
+        if (v) {
+            var versions = v.split("_");
+            var version = versions[versions.length - 1];
+            if (window.navigator.userAgent.indexOf("ios_native_navbar") > -1 && version >= "1.6.2") {
+                function setupWebViewJavascriptBridge(callback) {
+                    if (window.WebViewJavascriptBridge) {
+                        return callback(WebViewJavascriptBridge);
+                    }
+                    if (window.WVJBCallbacks) {
+                        return window.WVJBCallbacks.push(callback);
+                    }
+                    window.WVJBCallbacks = [callback];
+                    var WVJBIframe = document.createElement("iframe");
+                    WVJBIframe.style.display = "none";
+                    WVJBIframe.src = "https://__bridge_loaded__";
+                    document.documentElement.appendChild(WVJBIframe);
+                    setTimeout(function() {
+                        document.documentElement.removeChild(WVJBIframe);
+                    }, 0)
+                }
+                setupWebViewJavascriptBridge(function() {});
+            }
+            if (navigator.userAgent.indexOf("native_navbar") > -1) {
+                chartWithNative("register_pageid", eventId);
+            }
+        }
+    })();
+    document.onreadystatechange = function() {
+        if (document.readyState == "interactive" || document.readyState == "complete") {
+            chartWithNative("show_loading", 0);
+        }
+    }
+</script>
+<script type="text/javascript">
+    (function(i, s, o, g, r, a, m) {
+        i["GoogleAnalyticsObject"] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
+</script>
+<script type="text/javascript">
+    function isMidEast() {
+        var mid_east = ["ae", "om", "kw", "qa", "bh", "sa"];
+        var country_code = getCookie("country_code");
+        if (mid_east.indexOf(country_code) > -1) {
+            return true;
+        }
+        return false;
+    }(function() {
+        if (typeof ga !== "undefined") {
+            ga("create", "UA-71464937-1", "auto", {
+                "siteSpeedSampleRate": 30
+            });
+            ga("create", "UA-71464937-3", "auto", "MidEast");
+            ga(function(tracker) {
+                var originalSendHitTask = tracker.get("sendHitTask");
+                tracker.set("sendHitTask", function(model) {
+                    var payLoad = model.get("hitPayload");
+                    originalSendHitTask(model);
+                    var gifRequest = new XMLHttpRequest();
+                    var gifPath = "https://ga.fromfactory.club/__ua.gif";
+                    gifRequest.open("GET", gifPath + "?" + payLoad, true);
+                    gifRequest.send()
+                })
+            });
+            ga("require", "ec");
+            ga("MidEast.require", "ec");
+            var android_id = getCookie("android_id");
+            if (android_id) {
+                ga("set", "dimension1", android_id);
+                if (isMidEast()) {
+                    ga("MidEast.set", "dimension1", android_id)
+                }
+            }
+            var uid = getCookie("uid");
+            if (uid) {
+                ga("set", "dimension2", uid);
+                if (isMidEast()) {
+                    ga("MidEast.set", "dimension2", uid)
+                }
+            }
+            var utm_source = getCookie("utm_source");
+            if (utm_source) {
+                ga("set", "dimension3", utm_source);
+                if (isMidEast()) {
+                    ga("MidEast.set", "dimension3", utm_source)
+                }
+            }
+            var version = getCookie("v");
+            if (version) {
+                ga("set", "dimension4", version);
+                if (isMidEast()) {
+                    ga("MidEast.set", "dimension4", version)
+                }
+            }
+            var gender = getCookie("gender");
+            if (gender == "M") {
+                ga("set", "dimension5", "men");
+                if (isMidEast()) {
+                    ga("MidEast.set", "dimension5", "men")
+                }
+            } else {
+                if (gender == "F") {
+                    ga("set", "dimension5", "women");
+                    if (isMidEast()) {
+                        ga("MidEast.set", "dimension5", "women")
+                    }
+                } else {
+                    ga("set", "dimension5", "not set");
+                    if (isMidEast()) {
+                        ga("MidEast.set", "dimension5", "not set")
+                    }
+                }
+            }
+            var country_code = getCookie("country_code");
+            if (country_code) {
+                ga("set", "dimension6", country_code);
+                if (isMidEast()) {
+                    ga("MidEast.set", "dimension6", country_code)
+                }
+            }
+            var real_uid = getCookie("r_uid");
+            if (uid) {
+                ga("set", "dimension8", real_uid);
+                if (isMidEast()) {
+                    ga("MidEast.set", "dimension8", real_uid)
+                }
+            }
+            var language = getCookie("language");
+            if (language) {
+                ga("set", "dimension9", language);
+                if (isMidEast()) {
+                    ga("MidEast.set", "dimension9", language)
+                }
+            }
+            var experimentPath = getCookie("experiment_path");
+            if (experimentPath) {
+              experimentPath = experimentPath.replace(/\"|\'/g,"");
+            }
+            var report_ga = false;
+            var variationId = getCookie("variation_id");
+            if (experimentPath == location.pathname && +variationId != 2) {
+                report_ga = true
+            } else {
+                if (experimentPath == "/product/search" && location.pathname == "/product_list" && location.search.indexOf("q=") != -1) {
+                    report_ga = true
+                }
+            }
+            if (report_ga) {
+                var experimentStatus = getCookie("experiment_status");
+                if (experimentStatus == 1) {
+                    var experimentId = getCookie("experiment_id");
+                    var variationId = getCookie("variation_id");
+                    if (experimentId) {
+                        ga("set", "expId", experimentId);
+                        ga("set", "expVar", variationId)
+                    }
+                }
+            }
+            ga("send", "pageview");
+            if (isMidEast()) {
+                ga("MidEast.send", "pageview")
+            }
+        }
+    })();
+</script>
