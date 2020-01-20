@@ -20,9 +20,9 @@ async function createApp({appType, appPath, appName, appFrame}) {
 
   // 解压到目标路径
   let zip = new AdmZip(path.join(tplPath, `${tplName}.zip`));
-  zip.extractAllTo(process.cwd(), true);
+  zip.extractAllTo(root, true);
   // 重命名项目
-  await fs.rename(path.resolve(`.${tplName}`), path.resolve(appName))
+  // await fs.rename(path.resolve(`.${tplName}`), path.resolve(appName))
 
   // package.json数据填充
   // const packageContent = await consolidate.ejs(path.join(root, 'package.json'), {
