@@ -1,24 +1,42 @@
 #!/usr/bin/env node
-const {createApp} = require('./src/actions')
+const {createApp} = require('./actions')
 const chalk = require('chalk')
 const path = require('path')
 const prompts = require('prompts')
 const Commander = require('commander')
-const packageJson = require('./package.json')
+const packageJson = require('../package.json')
 const helpers = require('./helpers')
 
 let appType, appName, appPath, appFrame = ''
+let appInstall = false
 
-// cf-boot web -n my_app
+const appList = helpers.appList
+
+// hansin new <app-type> <app-name>
 const program = Commander
   .version(packageJson.version)
-  .option('-c, --type <type>', '项目类型')
-  .option('-n, --name <project>', '项目名称')
+  .option('new <app-type> <app-name>', '创建项目')
+  .option('-i, --install', '创建项目后执行 npm install')
   .action((commander) => {
     ({ type: appType, name: appName } = commander);
   })
   .allowUnknownOption()
   .parse(process.argv)
+
+// 解析项目类型与名称
+const processArgs = process.argv.slice(2)
+if (processArgs && processArgs[0] === 'new') {
+  if (processArgs[1]) {
+    appType = processArgs[1]
+  }
+  if (processArgs[2]) {
+    appName = processArgs[2]
+  }
+}
+// 解析是否自动安装
+if (processArgs.includes('-i')) {
+  appInstall = true
+}
 
 async function main() {
   if (typeof program.name === 'string') {
@@ -29,17 +47,13 @@ async function main() {
   const {valid: validType, problems: typeProblems} = helpers.validateAppType(appType)
 
   if (!appType || !validType) {
-    console.log(chalk.red(typeProblems.join("\n"))) // 如果项目类型校验不通过，给出提示
-    console.log('Please specify the project type:')
+    console.log(chalk.yellow(typeProblems.join("\n"))) // 如果项目类型校验不通过，给出提示
+    console.log(chalk.green('Please specify the project type（项目类型）:'))
     const res = await prompts({
       type: 'select',
       name: 'type',
-      message: 'Pick project type（项目类型）: ',
-      choices: [
-        {title: 'component', value: 'component', description: '前端组件库 项目'},
-        {title: 'web', value: 'web', description: 'Web 项目'},
-        {title: 'node', value: 'node', description: 'Node 项目'},
-      ],
+      message: 'Pick project type: ',
+      choices: appList,
     })
 
     appType = res.type
@@ -49,8 +63,11 @@ async function main() {
   const {valid: validName, problems: nameProblems} = helpers.validateAppName(appName)
 
   if (!appName || !validName) {
-    console.log(chalk.red(nameProblems.join("\n"))) // 如果项目名称校验不通过，给出提示
-    console.log('Please specify the project name (项目名称):')
+    if (appName && nameProblems && nameProblems.length) {
+      console.log(chalk.yellow(nameProblems.join("\n"))) // 如果项目名称校验不通过，给出提示
+    }
+
+    console.log('Please input the project name (项目名称):')
     const res = await prompts({
       type: 'text',
       name: 'name',
@@ -97,6 +114,7 @@ async function main() {
     appPath,
     appName,
     appFrame,
+    appInstall,
   })
 }
 

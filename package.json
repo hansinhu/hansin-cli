@@ -8,7 +8,7 @@
     "zip-tmp": "node ./src/actions/zip-tmp.js"
   },
   "bin": {
-    "hansin": "./index.js"
+    "hansin": "./src/index.js"
   },
   "files": [
     "helpers",

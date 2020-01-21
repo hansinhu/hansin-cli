@@ -1,0 +1,39 @@
+.home-main {
+  display: flex;
+  align-items: flex-start;
+  .home-left {
+    width: 180px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+  }
+  .home-right {
+   flex-grow: 1; 
+  }
+}
+
+@media (max-width: 750px) {
+  .home-main {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.home-menu-item {
+  border-bottom: 1px solid #777;
+  cursor: pointer;
+  background: #666;
+  &.menu_active {
+    background: #999;
+  }
+  .cfm_select_arrow_title {
+    color: #fff;
+    font-size: 18px;
+  }
+  .cfm_select_arrow_icon{
+    color: #fff;
+    width: 20px;
+    height: 20px;
+  }
+}

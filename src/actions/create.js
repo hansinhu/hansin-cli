@@ -6,7 +6,7 @@ const AdmZip = require('adm-zip'),
   consolidate = require('consolidate');
 const { exec } = require('child_process');
 
-async function createApp({appType, appPath, appName, appFrame}) {
+async function createApp({appType, appPath, appName, appFrame, appInstall}) {
   const root = path.resolve(appPath)
   const tplPath = path.join(__dirname, `../tmp/${appType}-tmp`);
   let tplName = ''
@@ -37,17 +37,19 @@ async function createApp({appType, appPath, appName, appFrame}) {
     'utf-8'
   );
 
-  // npm 包安装
-  console.log(chalk.green('begin to install packages, please wait ...'))
-  exec('npm i', {
-    cwd: root
-  }, err => {
-    if (err) {
-      console.log(chalk.red('install packages failed.'))
-    } else {
-      console.log(chalk.green('All packages are installed.Have fun with coding.'))
-    }
-  })
+  if (appInstall) {
+    // npm 包安装
+    console.log(chalk.green('begin to install packages, please wait ...'))
+    exec('npm i', {
+      cwd: root
+    }, err => {
+      if (err) {
+        console.log(chalk.red('install packages failed.'))
+      } else {
+        console.log(chalk.green('All packages are installed.Have fun with coding.'))
+      }
+    })
+  }
 }
 
 module.exports = createApp
