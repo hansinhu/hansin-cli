@@ -11,8 +11,8 @@
     "hansin": "./src/index.js"
   },
   "files": [
-    "helpers",
     "src/actions",
+    "src/helpers",
     "src/tmp/*/*.zip"
   ],
   "repository": {

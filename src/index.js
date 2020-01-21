@@ -24,6 +24,7 @@ const program = Commander
   .parse(process.argv)
 
 // 解析项目类型与名称
+console.log(process.argv)
 const processArgs = process.argv.slice(2)
 if (processArgs && processArgs[0] === 'new') {
   if (processArgs[1]) {
