@@ -2,6 +2,7 @@ import prompts, { PromptObject } from 'prompts'
 import { appTypeList, validateAppType, validateAppName } from '../helpers'
 import chalk from 'chalk'
 import path from 'path'
+import makeDir from 'make-dir'
 import { createApp } from './create'
 
 interface ProectArgs {
@@ -14,6 +15,7 @@ async function newProject ({ type, name, opts }:ProectArgs) {
   console.log('opts', opts)
   let appType = type
   let appName = name
+  let appPath = path.resolve()
   let selectOpts = {}
 
    // 项目类型校验
@@ -61,10 +63,12 @@ async function newProject ({ type, name, opts }:ProectArgs) {
   const selectTypeChoices = selectTypeItem?.choices as PromptObject<any>[]
   selectOpts = await prompts(selectTypeChoices)
 
-  console.log('selectOpts:', selectOpts)
+  // 项目目录是否已存在
+  if (!appPath.endsWith(appName)) {
+    appPath = path.resolve(appName)
+    await makeDir(appPath)
+  }
 
-
-  const appPath = path.resolve(appName)
   console.log()
   console.log(
     `Will Create App:

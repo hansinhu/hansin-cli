@@ -1,4 +1,4 @@
 
 
-export { appTypeList, validateAppType } from './validate-app-type'
+export { appTypeList, validateAppType } from './app-type'
 export { validateAppName } from './validate-app-name'

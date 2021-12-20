@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 const path = require('path')
 
-exec('cp -R tmp ./dist/tmp', {
+exec('rm -rf ./dist/tmp && cp -R tmp ./dist/tmp', {
 	cwd: path.resolve('./')
 }, (err) => {
 	if (err) {

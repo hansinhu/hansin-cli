@@ -64,7 +64,20 @@ function validateAppType(type: string) {
   }
 }
 
+function getTmplGitUrl (type: IAppType) {
+  switch (type) {
+    case IAppType.cli:
+      return {
+        tmplName: 'tmpl_node-cli',
+        gitUrl: 'https://github.com/hansinhu/tmpl_node-cli.git',
+      }
+    default:
+      throw new Error('模板未找到！！')
+  }
+}
+
 export {
   appTypeList,
   validateAppType,
+  getTmplGitUrl,
 }

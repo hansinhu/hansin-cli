@@ -20,7 +20,6 @@ prog
   .example('$ hansin new web my-app -i')
   .example('$ hansin new component my-component')
   .action((type, name, opts) => {
-    console.log('extra opts: ', opts);
     newProject({ type, name, opts })
   });
 
