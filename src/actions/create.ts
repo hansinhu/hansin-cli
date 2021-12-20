@@ -6,14 +6,23 @@ const AdmZip = require('adm-zip'),
   consolidate = require('consolidate');
 const { exec } = require('child_process');
 
-async function createApp({appType, appPath, appName, appFrame, appInstall}) {
+export interface CreateAppParams {
+	appType: string;
+	appPath: string;
+	appName: string;
+	opts?: Record<string, string>;
+}
+
+async function createApp({appType, appPath, appName, opts = {}}: CreateAppParams) {
+	console.log('opts', opts)
+	const { frame, install } = opts
   const root = path.resolve(appPath)
   const tplPath = path.join(__dirname, `../tmp/${appType}-tmp`);
   let tplName = ''
   if (appType === 'component') {
-    tplName = `${appFrame}`
+    tplName = `${frame}`
   } else {
-    tplName = `${appFrame}`
+    tplName = `${frame}`
   }
   
   await makeDir(root)
@@ -37,12 +46,12 @@ async function createApp({appType, appPath, appName, appFrame, appInstall}) {
     'utf-8'
   );
 
-  if (appInstall) {
+  if (install) {
     // npm 包安装
     console.log(chalk.green('begin to install packages, please wait ...'))
     exec('npm i', {
       cwd: root
-    }, err => {
+    }, (err: any) => {
       if (err) {
         console.log(chalk.red('install packages failed.'))
       } else {
@@ -52,4 +61,6 @@ async function createApp({appType, appPath, appName, appFrame, appInstall}) {
   }
 }
 
-module.exports = createApp
+export {
+	createApp
+}

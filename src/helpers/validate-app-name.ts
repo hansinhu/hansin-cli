@@ -1,8 +1,8 @@
-const validateNpmName = require('validate-npm-package-name')
-const fs = require('fs')
-const path = require('path')
+import validateNpmName from 'validate-npm-package-name'
+import fs from 'fs'
+import path from 'path'
 
-function validateAppName(name) {
+function validateAppName(name: string) {
   const nameValidation = validateNpmName(name)
   let exist = false;
   try {
@@ -12,7 +12,7 @@ function validateAppName(name) {
 
   }
   if (nameValidation.validForNewPackages && !exist) {
-    return { valid: true }
+    return { valid: true, problems: [] }
   }
 
   return {
@@ -24,4 +24,6 @@ function validateAppName(name) {
   }
 }
 
-module.exports = validateAppName
+export {
+  validateAppName
+}
