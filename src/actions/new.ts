@@ -8,59 +8,59 @@ import { createApp } from './create'
 interface ProectArgs {
 	type: IAppType;
 	name: string;
-  opts?:    Record<string, string>
+  opts?: Record<string, string>
 }
 
-async function newProject ({ type, name, opts }:ProectArgs) {
+async function newProject({ type, name, opts }: ProectArgs) {
   console.log('opts', opts)
   let appType = type
   let appName = name
   let appPath = path.resolve()
   let selectOpts = {}
 
-   // 项目类型校验
-   const { valid: validType, problems: typeProblems } = validateAppType(appType)
-   // 项目名称格式及存在校验:
+  // 项目类型校验
+  const { valid: validType, problems: typeProblems } = validateAppType(appType)
+  // 项目名称格式及存在校验:
   const { valid: validName, problems: nameProblems } = validateAppName(appName)
 
-	if (!validType) {
+  if (!validType) {
     // 如果项目类型校验不通过，给出提示
-    console.log(chalk.yellow(typeProblems.join("\n")))
+    console.log(chalk.yellow(typeProblems.join('\n')))
     console.log(chalk.green('Please specify the project type（项目类型）:'))
 
-		appType = (await prompts({
-			type: 'select',
+    appType = (await prompts({
+      type: 'select',
       name: 'type',
       message: 'Pick project type: ',
       choices: appTypeList,
-		})).type
-	}
+    })).type
+  }
 
-	// 如果项目名称校验不通过，给出提示
-	if (!validName) {
+  // 如果项目名称校验不通过，给出提示
+  if (!validName) {
     // 如果项目类型校验不通过，给出提示
-    console.log(chalk.yellow(nameProblems.join("\n")))
+    console.log(chalk.yellow(nameProblems.join('\n')))
     console.log('Please input the project name (项目名称):')
     appName = (await prompts({
       type: 'text',
       name: 'name',
       message: 'What is your project name?',
       initial: 'my_app',
-      validate: name => {
+      validate: (name) => {
         // 名称再次校验
         const validation = validateAppName(path.basename(path.resolve(name)))
         if (validation.valid) {
           return true
         }
-        return 'Invalid project name: ' + validation.problems[0] || ''
+        return `Invalid project name: ${validation.problems[0]}` || ''
       },
     })).name
   }
 
-  const selectTypeItem = appTypeList.find(item => item.value === appType)
+  const selectTypeItem = appTypeList.find((item) => item.value === appType)
 
   // 继续选择下一级
-  const selectTypeChoices = selectTypeItem?.otherArgs as PromptObject<any>[]
+  const selectTypeChoices = selectTypeItem?.otherArgs as Array<PromptObject<any>>
   selectOpts = await prompts(selectTypeChoices)
 
   // 项目目录是否已存在
@@ -90,5 +90,5 @@ async function newProject ({ type, name, opts }:ProectArgs) {
 }
 
 export {
-	newProject
+  newProject,
 }

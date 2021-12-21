@@ -4,10 +4,10 @@ import path from 'path'
 
 function validateAppName(name: string) {
   const nameValidation = validateNpmName(name)
-  let exist = false;
+  let exist = false
   try {
     fs.accessSync(path.resolve(name))
-    exist = true;
+    exist = true
   } catch (err) {
 
   }
@@ -25,5 +25,5 @@ function validateAppName(name: string) {
 }
 
 export {
-  validateAppName
+  validateAppName,
 }

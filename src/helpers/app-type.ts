@@ -18,8 +18,8 @@ const appTypeList = [
         name: 'frame',
         message: '选择框架:',
         choices: [
-          {title: 'react', value: 'react', description: '选用React'},
-          {title: 'vue', value: 'vue', description: '选用Vue'},
+          { title: 'react', value: 'react', description: '选用React' },
+          { title: 'vue', value: 'vue', description: '选用Vue' },
         ],
       },
       {
@@ -27,10 +27,10 @@ const appTypeList = [
         name: 'packageType',
         message: '构建类型:',
         choices: [
-          {title: 'Lerna', value: 'lerna', description: '选用Lerna'},
-          {title: 'Storybook', value: 'storybook', description: '选用storybook'},
+          { title: 'Lerna', value: 'lerna', description: '选用Lerna' },
+          { title: 'Storybook', value: 'storybook', description: '选用storybook' },
         ],
-      }
+      },
     ],
   },
   { title: 'library', value: 'library', description: '前端类库 项目', otherArgs: [] },
@@ -43,8 +43,8 @@ const appTypeList = [
       name: 'frame',
       message: 'choose your front-end frame:',
       choices: [
-        {title: 'react', value: 'react', description: '选用React'},
-        {title: 'vue', value: 'vue', description: '选用Vue'},
+        { title: 'react', value: 'react', description: '选用React' },
+        { title: 'vue', value: 'vue', description: '选用Vue' },
       ],
     }],
   },
@@ -53,21 +53,21 @@ const appTypeList = [
 ]
 
 function validateAppType(type: string) {
-  if (appTypeList.some(item => item.title === type)) {
+  if (appTypeList.some((item) => item.title === type)) {
     return { valid: true, problems: [] }
   }
 
-  const names = appTypeList.map(item => item.title).join(', ')
+  const names = appTypeList.map((item) => item.title).join(', ')
 
   return {
     valid: false,
     problems: [
-      `project type should be [ ${names} ]`
+      `project type should be [ ${names} ]`,
     ],
   }
 }
 
-function getTmplGitUrl (type: IAppType, opts: Record<string, string>) {
+function getTmplGitUrl(type: IAppType, opts: Record<string, string>) {
   switch (type) {
     case IAppType.cli:
       return {
