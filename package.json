@@ -16,9 +16,15 @@
   },
   "author": "hansinhu <hansincn@gmail.com>",
   "license": "ISC",
+  "engines": {
+    "node": " >= 10"
+  },
   "lint-staged": {
-    "*.{ts,tsx}": [
+    "*.{jsx,ts,tsx}": [
       "eslint --fix"
+    ],
+    "*.scss": [
+      "stylelint --fix --syntax scss"
     ]
   },
   "dependencies": {
