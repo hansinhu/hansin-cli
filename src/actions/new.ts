@@ -1,12 +1,12 @@
 import prompts, { PromptObject } from 'prompts'
-import { appTypeList, validateAppType, validateAppName } from '../helpers'
+import { appTypeList, validateAppType, validateAppName, IAppType } from '../helpers'
 import chalk from 'chalk'
 import path from 'path'
 import makeDir from 'make-dir'
 import { createApp } from './create'
 
 interface ProectArgs {
-	type: string;
+	type: IAppType;
 	name: string;
   opts?:    Record<string, string>
 }
@@ -60,7 +60,7 @@ async function newProject ({ type, name, opts }:ProectArgs) {
   const selectTypeItem = appTypeList.find(item => item.value === appType)
 
   // 继续选择下一级
-  const selectTypeChoices = selectTypeItem?.choices as PromptObject<any>[]
+  const selectTypeChoices = selectTypeItem?.otherArgs as PromptObject<any>[]
   selectOpts = await prompts(selectTypeChoices)
 
   // 项目目录是否已存在

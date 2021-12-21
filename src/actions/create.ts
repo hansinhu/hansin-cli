@@ -19,7 +19,7 @@ export interface CreateAppParams {
 
 async function createApp({appType, appPath, appName, opts = {}}: CreateAppParams) {
 	const { frame, install } = opts
-  const { tmplName, gitUrl } = getTmplGitUrl(appType)
+  const { tmplName, gitUrl } = getTmplGitUrl(appType, opts)
 
   // clone 模板项目
   await clone(gitUrl, appPath)
