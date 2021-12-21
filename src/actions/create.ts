@@ -8,12 +8,11 @@ import clone from 'git-clone/promise'
 import rimraf from 'rimraf'
 
 export interface CreateAppParams {
-	appType: IAppType;
-	appPath: string;
-	appName: string;
-	opts?: Record<string, string>;
+  appType: IAppType
+  appPath: string
+  appName: string
+  opts?: Record<string, string>
 }
-
 
 async function createApp({ appType, appPath, appName, opts = {} }: CreateAppParams) {
   const { frame, install } = opts
@@ -45,27 +44,25 @@ async function createApp({ appType, appPath, appName, opts = {} }: CreateAppPara
   // await fs.writeFile(path.join(root, 'package.json'), packageContent);
 
   const packageContent = await fs.readFile(path.join(appPath, 'package.json'), 'utf-8')
-  await fs.writeFile(
-    path.join(appPath, 'package.json'),
-    packageContent.replace(tmplName, appName),
-    'utf-8'
-  )
+  await fs.writeFile(path.join(appPath, 'package.json'), packageContent.replace(tmplName, appName), 'utf-8')
 
   if (install) {
     // npm 包安装
     console.log(chalk.green('begin to install packages, please wait ...'))
-    exec('npm i', {
-      cwd: appPath,
-    }, (err: any) => {
-      if (err) {
-        console.log(chalk.red('install packages failed.'))
-      } else {
-        console.log(chalk.green('All packages are installed.Have fun with coding.'))
-      }
-    })
+    exec(
+      'npm i',
+      {
+        cwd: appPath,
+      },
+      (err: any) => {
+        if (err) {
+          console.log(chalk.red('install packages failed.'))
+        } else {
+          console.log(chalk.green('All packages are installed.Have fun with coding.'))
+        }
+      },
+    )
   }
 }
 
-export {
-  createApp,
-}
+export { createApp }

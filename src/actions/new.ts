@@ -6,8 +6,8 @@ import makeDir from 'make-dir'
 import { createApp } from './create'
 
 interface ProectArgs {
-	type: IAppType;
-	name: string;
+  type: IAppType
+  name: string
   opts?: Record<string, string>
 }
 
@@ -28,12 +28,14 @@ async function newProject({ type, name, opts }: ProectArgs) {
     console.log(chalk.yellow(typeProblems.join('\n')))
     console.log(chalk.green('Please specify the project type（项目类型）:'))
 
-    appType = (await prompts({
-      type: 'select',
-      name: 'type',
-      message: 'Pick project type: ',
-      choices: appTypeList,
-    })).type
+    appType = (
+      await prompts({
+        type: 'select',
+        name: 'type',
+        message: 'Pick project type: ',
+        choices: appTypeList,
+      })
+    ).type
   }
 
   // 如果项目名称校验不通过，给出提示
@@ -41,20 +43,22 @@ async function newProject({ type, name, opts }: ProectArgs) {
     // 如果项目类型校验不通过，给出提示
     console.log(chalk.yellow(nameProblems.join('\n')))
     console.log('Please input the project name (项目名称):')
-    appName = (await prompts({
-      type: 'text',
-      name: 'name',
-      message: 'What is your project name?',
-      initial: 'my_app',
-      validate: (name) => {
-        // 名称再次校验
-        const validation = validateAppName(path.basename(path.resolve(name)))
-        if (validation.valid) {
-          return true
-        }
-        return `Invalid project name: ${validation.problems[0]}` || ''
-      },
-    })).name
+    appName = (
+      await prompts({
+        type: 'text',
+        name: 'name',
+        message: 'What is your project name?',
+        initial: 'my_app',
+        validate: (name) => {
+          // 名称再次校验
+          const validation = validateAppName(path.basename(path.resolve(name)))
+          if (validation.valid) {
+            return true
+          }
+          return `Invalid project name: ${validation.problems[0]}` || ''
+        },
+      })
+    ).name
   }
 
   const selectTypeItem = appTypeList.find((item) => item.value === appType)
@@ -75,7 +79,7 @@ async function newProject({ type, name, opts }: ProectArgs) {
       ${chalk.cyan('项目类型：')} ${chalk.green(appType)}
       ${chalk.cyan('项目名称：')} ${chalk.green(appName)}
       ${chalk.cyan('项目目录：')} ${chalk.green(appPath)}
-    `
+    `,
   )
 
   createApp({
@@ -89,6 +93,4 @@ async function newProject({ type, name, opts }: ProectArgs) {
   })
 }
 
-export {
-  newProject,
-}
+export { newProject }
